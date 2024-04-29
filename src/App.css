@@ -5,14 +5,15 @@ body {
   }
   
   .header-container {
-    background-color: #102150;
+    background-color: #311050;
     padding: 20px;
     text-align: center;
   }
   
   h1 {
     color: #f0eded;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: fantasy;
+    font-weight: bold;
   }
   
   table {

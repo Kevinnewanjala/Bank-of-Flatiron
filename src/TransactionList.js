@@ -1,34 +1,55 @@
-// Import React module
-import React from 'react';
+import React, { useState } from 'react';
+import './TransactionList.css'; // Import the CSS file for TransactionList styles
 
-// Define TransactionList component as a functional component
 const TransactionList = ({ transactions }) => {
+  const [sortBy, setSortBy] = useState('date'); // Default sort by date
+
+  // Function to handle sorting
+  const handleSort = (sortByField) => {
+    setSortBy(sortByField);
+  };
+
+  // Sort transactions based on the selected field
+  const sortedTransactions = [...transactions].sort((a, b) => {
+    if (sortBy === 'category') {
+      return a.category.localeCompare(b.category);
+    } else if (sortBy === 'description') {
+      return a.description.localeCompare(b.description);
+    } else {
+      // Default sorting by date
+      return new Date(a.date) - new Date(b.date);
+    }
+  });
+
   return (
-    <table> {/* Table element */}
-      <thead> {/* Table header */}
-        <tr> {/* Table row */}
-          {/* Table header cells */}
-          <th>Date</th> {/* Date column */}
-          <th>Description</th> {/* Description column */}
-          <th>Category</th> {/* Category column */}
-          <th>Amount</th> {/* Amount column */}
-        </tr>
-      </thead>
-      <tbody> {/* Table body */}
-        {/* Map through transactions array and generate table rows */}
-        {transactions.map((transaction, index) => (
-          <tr key={index}> {/* Table row with unique key */}
-            {/* Table data cells with transaction data */}
-            <td>{transaction.date}</td> {/* Date */}
-            <td>{transaction.description}</td> {/* Description */}
-            <td>{transaction.category}</td> {/* Category */}
-            <td>{transaction.amount}</td> {/* Amount */}
+    <div>
+      <div className="sorting-buttons-container"> {/* Apply CSS class for centering */}
+        <button onClick={() => handleSort('date')}>Sort by Date</button>
+        <button onClick={() => handleSort('category')}>Sort by Category</button>
+        <button onClick={() => handleSort('description')}>Sort by Description</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {sortedTransactions.map((transaction, index) => (
+            <tr key={index}>
+              <td>{transaction.date}</td>
+              <td>{transaction.description}</td>
+              <td>{transaction.category}</td>
+              <td>{transaction.amount}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
-// Export the TransactionList component as the default export
 export default TransactionList;

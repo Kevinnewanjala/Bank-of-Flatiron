@@ -51,5 +51,5 @@ const TransactionList = ({ transactions }) => {
     </div>
   );
 };
-
+//Export the TransactionList component as the default export
 export default TransactionList;
